@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:ui'; // Required for ImageFilter
 import 'theme.dart';
 import 'card.dart'; // Ensure HabitCard and Habit are imported
 
@@ -41,42 +40,24 @@ class HomePage extends StatelessWidget {
     ];
 
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [AppTheme.boneColor, AppTheme.brownColor],
-              ),
-            ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [AppTheme.boneColor, AppTheme.brownColor],
           ),
-          Positioned(
-            top: 100, // Adjust the top position of blur effect
-            bottom: 100, // Adjust the bottom position of blur effect
-            left: 0,
-            right: 0,
-            child: ClipRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                child: Container(
-                  color: Colors.transparent,
-                  child: ListView.builder(
-                    padding: EdgeInsets.symmetric(vertical: 20.0),
-                    itemCount: habits.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: HabitCard(habit: habits[index]),
-                      );
-                    },
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
+        child: ListView.builder(
+          padding: EdgeInsets.symmetric(vertical: 20.0),
+          itemCount: habits.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: HabitCard(habit: habits[index]),
+            );
+          },
+        ),
       ),
     );
   }
