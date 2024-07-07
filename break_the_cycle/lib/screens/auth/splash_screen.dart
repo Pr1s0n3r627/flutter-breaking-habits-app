@@ -1,33 +1,19 @@
-// TODO Implement this library.// lib/screens/auth/splash_screen.dart
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import '../home_screen.dart';
+import 'package:break_the_cycle/screens/home_screen.dart';
 
-class SplashScreen extends StatefulWidget {
-  @override
-  _SplashScreenState createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-    _initializeFirebase();
-  }
-
-  Future<void> _initializeFirebase() async {
-    await Firebase.initializeApp();
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => HomeScreen()),
-    );
-  }
-
+class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration(seconds: 2), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+    });
+
     return Scaffold(
       body: Center(
-        child: CircularProgressIndicator(),
+        child: Text('Break the Cycle'),
       ),
     );
   }
