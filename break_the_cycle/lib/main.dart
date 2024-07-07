@@ -1,63 +1,73 @@
 import 'package:flutter/material.dart';
-import 'theme.dart';
-import 'card.dart'; // Ensure HabitCard and Habit are imported
+import 'theme.dart'; // Ensure AppTheme is imported
 
-void main() {
-  runApp(const MyApp());
+class Habit {
+  final String title;
+
+  Habit({required this.title});
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class HabitCard extends StatefulWidget {
+  final Habit habit;
+
+  const HabitCard({Key? key, required this.habit}) : super(key: key);
+
+  @override
+  _HabitCardState createState() => _HabitCardState();
+}
+
+class _HabitCardState extends State<HabitCard> {
+  bool _highlighted = false;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Break the Habits',
-      theme: ThemeData(
-        primaryColor: AppTheme.primaryColor,
-      ),
-      home: const HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    List<Habit> habits = [
-      Habit(title: 'Card 1'),
-      Habit(title: 'Card 2'),
-      Habit(title: 'Card 3'),
-      Habit(title: 'Card 4'),
-      Habit(title: 'Card 5'),
-      Habit(title: 'Card 6'),
-      Habit(title: 'Card 7'),
-      Habit(title: 'Card 8'),
-      Habit(title: 'Card 9'),
-      Habit(title: 'Card 10'),
-    ];
-
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [AppTheme.boneColor, AppTheme.brownColor],
-          ),
-        ),
-        child: ListView.builder(
-          padding: EdgeInsets.symmetric(vertical: 20.0),
-          itemCount: habits.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: HabitCard(habit: habits[index]),
-            );
-          },
-        ),
+    return GestureDetector(
+      onTapDown: (_) {
+        setState(() {
+          _highlighted = true;
+        });
+      },
+      onTapCancel: () {
+        setState(() {
+          _highlighted = false;
+        });
+      },
+      onTapUp: (_) {
+        setState(() {
+          _highlighted = false;
+        });
+      },
+      child: TweenAnimationBuilder<double>(
+        tween: Tween<double>(begin: 1.0, end: 0.95),
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+        builder: (context, scale, child) {
+          return AnimatedContainer(
+            duration: Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            transform: Matrix4.identity()..scale(scale),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              color: _highlighted ? AppTheme.primaryColor : AppTheme.cardColor,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  blurRadius: 6,
+                  offset: Offset(0, 3),
+                ),
+              ],
+            ),
+            padding: EdgeInsets.all(16),
+            child: Text(
+              widget.habit.title,
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: _highlighted ? Colors.white : AppTheme.textColor,
+              ),
+            ),
+          );
+        },
       ),
     );
   }
