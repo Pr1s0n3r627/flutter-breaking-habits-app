@@ -1,21 +1,17 @@
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 import '../models/habit.dart';
 
 class HabitService {
-  Future<void> saveHabit(Habit habit) async {
-    final prefs = await SharedPreferences.getInstance();
-    List<String> habitList = prefs.getStringList('habits') ?? [];
-    habitList.add(jsonEncode({'name': habit.name, 'startTime': habit.startTime.toIso8601String()}));
-    await prefs.setStringList('habits', habitList);
+  // Dummy data for now
+  Future<List<Habit>> loadHabits() async {
+    await Future.delayed(Duration(seconds: 1)); // Simulate loading delay
+    return [
+      Habit(name: 'Exercise', startTime: DateTime.now()),
+      Habit(name: 'Meditation', startTime: DateTime.now()),
+      Habit(name: 'Reading', startTime: DateTime.now()),
+    ];
   }
 
-  Future<List<Habit>> loadHabits() async {
-    final prefs = await SharedPreferences.getInstance();
-    List<String> habitList = prefs.getStringList('habits') ?? [];
-    return habitList.map((item) {
-      Map<String, dynamic> json = jsonDecode(item);
-      return Habit(name: json['name'], startTime: DateTime.parse(json['startTime']));
-    }).toList();
+  void saveHabit(Habit habit) {
+    // Implement saving logic here
   }
 }

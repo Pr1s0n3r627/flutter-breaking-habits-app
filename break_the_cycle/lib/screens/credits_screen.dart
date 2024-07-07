@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import '../widgets/credits_page.dart';
 
-class HomeScreen extends StatelessWidget {
+class CreditsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text('Credits'),
       ),
-      body: Center(
-        child: Text('Welcome to Break the Cycle App!'),
-      ),
+      body: CreditsPage(),
     );
   }
 }

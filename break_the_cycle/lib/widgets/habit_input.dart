@@ -1,40 +1,25 @@
 import 'package:flutter/material.dart';
 
-class HabitInput extends StatefulWidget {
+class HabitInput extends StatelessWidget {
   final Function(String) onHabitAdded;
 
   HabitInput({required this.onHabitAdded});
 
   @override
-  _HabitInputState createState() => _HabitInputState();
-}
-
-class _HabitInputState extends State<HabitInput> {
-  final _controller = TextEditingController();
-
-  void _submit() {
-    final text = _controller.text;
-    if (text.isNotEmpty) {
-      widget.onHabitAdded(text);
-      _controller.clear();
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: TextField(
-            controller: _controller,
-            decoration: InputDecoration(labelText: 'Enter habit'),
+    return Container(
+      padding: EdgeInsets.all(16.0),
+      child: TextField(
+        onSubmitted: onHabitAdded,
+        decoration: InputDecoration(
+          labelText: 'Enter habit name',
+          border: OutlineInputBorder(),
+          suffixIcon: IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {},
           ),
         ),
-        IconButton(
-          icon: Icon(Icons.add),
-          onPressed: _submit,
-        ),
-      ],
+      ),
     );
   }
 }

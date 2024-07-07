@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../models/habit.dart';
-import 'package:intl/intl.dart';
 
 class HabitCard extends StatelessWidget {
   final Habit habit;
@@ -9,12 +8,15 @@ class HabitCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final duration = DateTime.now().difference(habit.startTime);
     return Card(
+      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       child: ListTile(
         title: Text(habit.name),
-        subtitle: Text('Started: ${DateFormat.yMMMd().format(habit.startTime)}'),
-        trailing: Text('${duration.inDays} days'),
+        subtitle: Text('Started: ${habit.startTime}'),
+        trailing: IconButton(
+          icon: Icon(Icons.delete),
+          onPressed: () {},
+        ),
       ),
     );
   }
